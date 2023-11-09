@@ -1,6 +1,7 @@
 # This is a sample Python script.
 from fastapi.security import HTTPBearer
 
+from models.request.embeddings_request import EmbeddingsRequest
 from models.request.inference_request import InferenceRequest
 from services.genhealth_service import GenhealthService
 from fastapi import FastAPI, Request, Response, Depends
@@ -21,6 +22,12 @@ def create_app() -> FastAPI:
     @app.post('/predict')
     async def predict(request: InferenceRequest, token = Depends(oauth2_scheme)):
         health = GenhealthService(url="https://api.genhealth.ai/predict") #move this so its not hardcoded in the future
+        health.post_to_genhealth(json_data=request.model_dump_json(), token=token.credentials)
+
+    @app.post('/embeddings')
+    async def embeddings(request: EmbeddingsRequest, token=Depends(oauth2_scheme)):
+        health = GenhealthService(
+            url="https://api.genhealth.ai/predict")  # move this so its not hardcoded in the future
         health.post_to_genhealth(json_data=request.model_dump_json(), token=token.credentials)
 
     # catch some of these exceptions thrown by post to gen health
