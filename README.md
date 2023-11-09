@@ -29,3 +29,7 @@ I believe that deployment/security is pretty important for startups, as they nee
 
 When Engineers have designs that are working on their laptops, which have some break through capability or reduce a painpoint. 
 There is an abyss to get it deployed and working in the cloud. 
+
+
+I ran out of time for unit tests, but the idea is that we want to mock the 3rd party call to genhealth 
+and see how the code behaves with asserts.
